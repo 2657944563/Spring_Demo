@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <import resource="classpath:applicationContext.xml"/>
+<!--    导入外部配置资源-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <bean id="C3P0" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="user" value="root"/>
+        <property name="password" value=""/>
+        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/work3"/>
+    </bean>
+<!--    配置druid，使用外部配置，spEl表达式获取具体值-->
+    <bean id="druid" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="username" value="${user}"/>
+        <property name="password" value=""/>
+        <property name="url" value="${jdbcurl}"/>
+        <property name="driverClassName" value="${driver}"/>
+    </bean>
+
+<!--    启用组件扫描，扫描对应目录下注解的Bean-->
+    <context:component-scan base-package="com.example.spring_demo.Demo2"/>
+</beans>

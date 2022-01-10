@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       xmlns:p = "http://www.springframework.org/schema/p">
+<!--     配置一般Bean-->
+<!--    <bean id="userDao" class="com.example.spring_demo.Demo1.UserDaoImpl" scope="singleton" init-method="init" destroy-method="destroy"></bean>-->
+<!--    工厂静态实例化-->
+<!--    <bean id="factoryUserDao" class="com.example.spring_demo.Demo1.factoryUserDao" scope="singleton" factory-method="retUserDao" ></bean>-->
+<!--    工厂方法实例化-->
+<!--    <bean id="factoryUserDao1" class="com.example.spring_demo.Demo1.factoryUserDao"></bean>-->
+<!--    <bean id="UserDao1" factory-bean="factoryUserDao1" factory-method="retUserDao1"></bean>-->
+<!--    依赖注入-->
+<!--    <bean id="userService" class="com.example.spring_demo.Demo1.UserServse" >-->
+<!--        <property name="userDao" ref="userDao"></property>-->
+<!--    </bean>-->
+<!--     p命名空间依赖注入-->
+<!--    <bean id="userService" class="com.example.spring_demo.Demo1.UserServse" p:userDao-ref="userDao"></bean>-->
+<!--    构造方法注入-->
+    <bean id="userService" class="com.example.spring_demo.Demo1.UserServse">
+        <constructor-arg name="userDao" ref="userDao"></constructor-arg>
+    </bean>
+<!--    注入一般类型-->
+<!--    <bean id="userDao" class="com.example.spring_demo.Demo1.UserDaoImpl" scope="singleton" init-method="init" destroy-method="destroy">-->
+<!--        <property name="age" value="20"></property>-->
+<!--        <property name="name" value="John"></property>-->
+<!--    </bean>-->
+<!--    注入集合-->
+    <bean id="userDao" class="com.example.spring_demo.Demo1.UserDaoImpl" scope="singleton" init-method="init" destroy-method="destroy">
+        <property name="age" value="20"></property>
+        <property name="name" value="John"></property>
+        <property name="md">
+            <list>
+                <value>"213"</value>
+                <value>"213"</value>
+                <value>"213"</value>
+            </list>
+        </property>
+        <property name="mp">
+            <map>
+                <entry key="name" value="John"></entry>
+                <entry key="age" value="20"></entry>
+            </map>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="name">John</prop>
+                <prop key="age">20</prop>
+            </props>
+        </property>
+    </bean>
+</beans>
