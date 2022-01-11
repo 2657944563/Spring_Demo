@@ -4,6 +4,8 @@ import com.example.Service.userService;
 import com.example.Utils.webServletUtil;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -22,6 +24,8 @@ public class Spring_web1 extends HttpServlet {
 //        AnnotationConfigApplicationContext app = new AnnotationConfigApplicationContext(com.example.SpringConfig.Configuration.class);
 //        ApplicationContext app = (ApplicationContext)request.getServletContext().getAttribute("app");
         ApplicationContext app = webServletUtil.getApplicationContext(this.getServletContext());
+//        ServletContext sc = this.getServletContext();
+//        ApplicationContext app = WebApplicationContextUtils.getWebApplicationContext(sc);
         userService service = (userService)app.getBean("userService");
         service.show();
     }

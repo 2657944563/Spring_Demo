@@ -18,7 +18,7 @@ public class serviceContextListener implements ServletContextListener, HttpSessi
 //        servletContext.setAttribute("app", app);
         servletContext.setAttribute(servletContext.getInitParameter("applicationContext"), app);
 
-        System.out.println(servletContext.getInitParameter("userProperties"));
+        System.out.println(servletContext.getInitParameter("contextConfigLocation"));
     }
 
 }
