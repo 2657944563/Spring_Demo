@@ -1,4 +1,3 @@
-
 <%--
   Created by IntelliJ IDEA.
   User: 2657944563
@@ -12,6 +11,6 @@
     <title>Success</title>
 </head>
 <body>
-<h1>SUCCESS!${name}</h1>
+<h1>SUCCESS</h1>
 </body>
 </html>
