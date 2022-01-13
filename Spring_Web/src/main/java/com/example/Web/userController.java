@@ -7,10 +7,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 @Controller
 //@RequestMapping("/user")
@@ -185,14 +189,60 @@ public class userController {
      * Restful 风格，将参数封装url
      *
      * @param name 请求的name
-     * @param age   请求的age
-     * @return  返回对应的字符串
+     * @param age  请求的age
+     * @return 返回对应的字符串
      * @throws JsonProcessingException
      */
     @RequestMapping(value = "/quick17/{name}/{age}", method = RequestMethod.GET)
     @ResponseBody
-    public String save16(@PathVariable(value = "name") String name, @PathVariable("age") int age) throws JsonProcessingException {
+    public String save17(@PathVariable(value = "name") String name, @PathVariable("age") int age) throws JsonProcessingException {
         return name + age;
     }
 
+    /**
+     * 配置类型转换器，转换日期类型
+     *
+     * @param date 传入的数据通过类型转换器转换为日期
+     * @return 返回日期string
+     * @throws JsonProcessingException
+     */
+    @RequestMapping(value = "/quick18", method = RequestMethod.GET)
+    @ResponseBody
+    public String save18(Date date) throws JsonProcessingException {
+        return date.toString();
+    }
+
+    /**
+     * 获取请求头传入指定的形参
+     *
+     * @param str 用于存放请RequestHeader指定的请求头求头
+     * @return 返回请求头数据
+     */
+    @RequestMapping(value = "/quick19", method = RequestMethod.GET)
+    @ResponseBody
+    public String save19(@RequestHeader(value = "user-agent", required = false) String str, HttpSession httpSession) {
+        return str + '\n' + httpSession.toString();
+    }
+
+    /**
+     * 尝试获取Cookie的值，获取指定Cookie里的JSESSIONID的值
+     *
+     * @param cookie 返回获得的Cookie的值
+     * @return 交由Mvc控制器回写Cookie数据
+     */
+    @RequestMapping(value = "/quick20", method = RequestMethod.GET)
+    @ResponseBody
+    public String save20(@CookieValue(value = "JSESSIONID") String cookie) {
+        return cookie;
+    }
+
+
+    @RequestMapping(value = "/quick21", method = RequestMethod.POST)
+    @ResponseBody
+    public String save21(String name, MultipartFile file) throws IOException {
+        String originalFilename = file.getOriginalFilename();
+        String contentType = file.getContentType();
+        file.transferTo(new File("C://" + originalFilename));
+        return originalFilename + ":" + contentType;
+    }
 }

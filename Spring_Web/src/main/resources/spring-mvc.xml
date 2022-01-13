@@ -25,12 +25,32 @@
 <!--            </list>-->
 <!--        </property>-->
 <!--    </bean>-->
+
 <!--    MVC注解配置转换器-->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven conversion-service="conversionService"/>
+
 <!--    手动配置静态资源映射-->
 <!--    <mvc:resources mapping="/img/**" location="/img/"/>-->
 <!--    如果mvc找不到对应的请求方法体，那么会交由原始处理中间件来处理-->
     <mvc:default-servlet-handler/>
 
-<!--    配置解决中文乱码的Filter-->
+<!--    自定义数据类型转换类-->
+<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+<property name="converters">
+    <list>
+        <bean class="com.example.Converter.dateConverter"/>
+    </list>
+</property>
+</bean>
+
+<!--    配置文件上传解析器-->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+<!--        文件上传总大小-->
+        <property name="maxUploadSize" value="5242800"/>
+<!--        单个文件大小-->
+        <property name="maxUploadSizePerFile" value="5242800"/>
+<!--        文件默认编码-->
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
 </beans>
