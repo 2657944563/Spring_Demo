@@ -4,23 +4,15 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-<!--    配置全局参数-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
-    <context-param>
-        <param-name>applicationContext</param-name>
-        <param-value>application</param-value>
-    </context-param>
-    
-<!--    配置监听器-->
-    <listener>
-        <listener-class>com.example.Listener.serviceContextListener</listener-class>
-    </listener>
+
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
     <!--    配置过滤器,解决Mvc中文乱码，设置encoding-->
     <filter>
         <filter-name>characterEncodingFilter</filter-name>
@@ -35,7 +27,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!--    spring-mvc的前端控制器-->
     <servlet>
         <servlet-name>DispatcherServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -48,14 +39,5 @@
     <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/</url-pattern>
-    </servlet-mapping>
-<!--    配置Servlet站点路径-->
-    <servlet>
-        <servlet-name>Servlet_web</servlet-name>
-        <servlet-class>com.example.Web.Spring_web1</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Servlet_web</servlet-name>
-        <url-pattern>/Spring_web2</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <mvc:annotation-driven/>
+    <mvc:default-servlet-handler/>
+    <context:component-scan base-package="com.example.spring_interceptor.Test1"/>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+<!--            对资源拦截-->
+            <mvc:mapping path="/**"/>
+            <bean class="com.example.spring_interceptor.SpringInterceptor.Interceptor1"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+<!--    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
+<!--&lt;!&ndash;        默认异常，当异常没有匹配处理机制，会从这里处理&ndash;&gt;-->
+<!--        <property name="defaultErrorView" value="error"/>-->
+<!--&lt;!&ndash;        异常映射，分别处理不同的异常&ndash;&gt;-->
+<!--        <property name="exceptionMappings">-->
+<!--            <map>-->
+<!--                <entry key="java.lang.NullPointerException" value="error"/>-->
+<!--                <entry key="java.lang.Exception" value="index.jsp"/>-->
+<!--            </map>-->
+<!--        </property>-->
+<!--    </bean>-->
+
+    <bean class="com.example.spring_interceptor.ExceptionResolver.ExceptionResolver1"/>
+</beans>
