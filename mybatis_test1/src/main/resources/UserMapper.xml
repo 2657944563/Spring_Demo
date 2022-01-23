@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--配置接口代理-->
+<mapper namespace="com.example.mybatis_test1.Dao.UserMapperInterface">
+
+    <sql id="selectUserAll">select *
+                            from mybatis.user</sql>
+    <select id="findAll" resultType="user">
+        <include refid="selectUserAll"/>
+    </select>
+    <select id="findId" parameterType="int" resultType="user">
+        <include refid="selectUserAll"/>
+        where id = #{id}
+    </select>
+    <!--    动态sql编写-->
+    <select id="findUser" parameterType="com.example.mybatis_test1.domain.User" resultType="user">
+        <include refid="selectUserAll"/>
+        <where>
+            <if test="id != 0">
+                id = #{id}
+            </if>
+            <if test="name != null">
+                and name = #{name}
+            </if>
+            <if test="password != null">
+                and password = #{password}
+            </if>
+        </where>
+    </select>
+
+    <!--    foreach使用-->
+    <select id="findIds" parameterType="list" resultType="user">
+        <include refid="selectUserAll"/>
+        <where>
+            <if test="list != null">
+                <foreach collection="list" item="id" open="id in (" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <!--    自定义类型转换器测试-->
+    <insert id="insertUser">
+        insert into mybatis.user
+        values (#{id}, #{name}, #{password}, #{brithDay})
+    </insert>
+
+    <update id="updateUser" parameterType="user">
+        update mybatis.user set name = #{name},password = #{password}
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from mybatis.user where id = #{id}
+    </delete>
+
+    <select id="findByUserId" parameterType="int" resultType="user">
+        select * from mybatis.user where id = #{id}
+    </select>
+</mapper>

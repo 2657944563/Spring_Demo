@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--    扫包，并且排除@controller-->
+    <context:component-scan base-package="com.example.spring_ssm">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+<!--    导入资源-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+<!--    配置数据源-->
+    <bean id="druid" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="driverClassName" value="${jdbc.driver}"/>
+    </bean>
+
+<!--    配置SqlSessionFaction-->
+<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sessionFactory">
+    <property name="dataSource" ref="druid"/>
+    <property name="configLocation" value="classpath:SqlMapConfig-spring.xml"/>
+</bean>
+
+<!--    配置MapperBean-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.example.spring_ssm.mapper"/>
+    </bean>
+
+<!--    配置生命树事务控制-->
+    <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
+        <property name="dataSource" ref="druid"/>
+    </bean>
+<!--    配置事务增强-->
+    <tx:advice id="interceptor">
+        <tx:attributes>
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+
+<!--    配置事务aop织入-->
+    <aop:config>
+        <aop:advisor advice-ref="interceptor" pointcut="execution(* com.example.spring_ssm.controller.*.*(..))"/>
+    </aop:config>
+
+<!--    启动事务注解驱动-->
+<!--    <tx:annotation-driven transaction-manager="transactionManager"/>-->
+</beans>
