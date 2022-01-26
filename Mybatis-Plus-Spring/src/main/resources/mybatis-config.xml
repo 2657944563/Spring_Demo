@@ -6,7 +6,7 @@
 
 <!--    定义别名-->
     <typeAliases>
-        <package name="com.example.mybatisplus.pojo"/>
+        <package name="com.example.MybatisPlusSpring.pojo"/>
     </typeAliases>
 
 <!--    配置数据源-->

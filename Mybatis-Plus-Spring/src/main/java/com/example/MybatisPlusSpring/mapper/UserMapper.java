@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 public interface UserMapper extends BaseMapper<User> {
-    @Select("select * from mybatis.user")
+//    @Select("select * from mybatis.user")
     public List<User> findAll();
 }

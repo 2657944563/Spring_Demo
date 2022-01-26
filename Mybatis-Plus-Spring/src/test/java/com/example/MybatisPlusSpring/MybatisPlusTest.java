@@ -2,6 +2,8 @@ package com.example.MybatisPlusSpring;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.MybatisPlusSpring.mapper.UserMapper;
 import com.example.MybatisPlusSpring.pojo.User;
 import org.junit.Test;
@@ -11,10 +13,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.LinkedList;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class test1 {
+public class MybatisPlusTest {
     @Autowired
     private UserMapper userMapper;
 
@@ -35,6 +38,19 @@ public class test1 {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.gt("id", 1);
         System.out.println(userMapper.selectList(wrapper));
+    }
+    /**
+     * 分页查询测试
+     */
+    @Test
+    public void test6() {
+        IPage<User> userIPage = new Page<>(2, 10);
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("name", "mbr");
+        IPage<User> page = userMapper.selectPage(userIPage, wrapper);
+        System.out.println(page.getPages()+"__________________");
+        final List<User> records = page.getRecords();
+        System.out.println(records);
     }
 
     /**
@@ -96,5 +112,10 @@ public class test1 {
             linkedList.add(i + 10);
         }
         userMapper.deleteBatchIds(linkedList);//使用集合作为id条件删除
+    }
+
+    @Test
+    public void test7() {
+        System.out.println(userMapper.findAll());
     }
 }

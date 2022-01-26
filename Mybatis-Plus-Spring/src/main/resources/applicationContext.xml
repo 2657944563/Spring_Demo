@@ -13,10 +13,34 @@
     </bean>
     <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean" >
         <property name="dataSource" ref="druid"/>
+<!--        配置插件-->
+        <property name="plugins">
+            <array>
+                <ref bean="mybatisPlusInterceptor"/>
+            </array>
+        </property>
+
+<!--        添加mybatis核心配置文件，可不添加-->
 <!--        <property name="configLocation" value="classpath:mybatis-config.xml"/>-->
+<!--        导入mapper-->
+        <property name="mapperLocations" value="classpath:Mapper.xml"/>
+<!--        定义别名-->
+        <property name="typeAliasesPackage" value="com.example.MybatisPlusSpring.pojo"/>
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.example.MybatisPlusSpring.mapper"/>
+    </bean>
+
+<!--    配置mybatisPlus分页插件-->
+    <bean id="paginationInnerInterceptor" class="com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor">
+        <constructor-arg name="dbType" value="H2"/>
+    </bean>
+    <bean id="mybatisPlusInterceptor" class="com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor">
+        <property name="interceptors">
+            <list>
+                <ref bean="paginationInnerInterceptor"/>
+            </list>
+        </property>
     </bean>
 
 </beans>

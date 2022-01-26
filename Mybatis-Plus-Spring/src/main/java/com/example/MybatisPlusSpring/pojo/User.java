@@ -1,6 +1,7 @@
 package com.example.MybatisPlusSpring.pojo;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("user")
-public class User {
+public class User extends Model<User> {
     @TableId(type = IdType.AUTO)
     private Long id;
     @TableField("name")//指定数据库字段名
